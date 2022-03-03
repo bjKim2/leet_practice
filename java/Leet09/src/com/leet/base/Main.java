@@ -56,6 +56,8 @@ public class Main {
 		
 		
 		System.out.println(answer);
+		Try02 try02 = new Try02();
+		try02.try02();
 	}
 
 }
