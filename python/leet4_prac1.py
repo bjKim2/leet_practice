@@ -4,11 +4,13 @@
 m = [1,3,5,7,9]
 n = [6,8,10,12,13]
 
-# n이 더 길면 m 과 바꾼다 . m 이 더 길거나 같다.
-if(len(m)<len(n)):    
-    tmp = m
-    m = n
-    n = tmp
+# n이 더 길면 m 과 바꾼다 . m 이 더 길거나 같다.\
+def ifswitch(m,n):
+    if(len(m)<len(n)):    
+        tmp = m
+        m = n
+        n = tmp
+    return m,n
 
 ##이제 길이가 m >= n 이다. 
 # 배열 두개를 합치지않고  중앙값을 구하려면
@@ -207,9 +209,3 @@ while(True):
 
 
 
-
-
-
-class Solution(object):
-    
-    c
