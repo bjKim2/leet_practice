@@ -1,6 +1,7 @@
 
 
 from calendar import c
+from http.client import NETWORK_AUTHENTICATION_REQUIRED
 
 
 m= [1,2,3]
@@ -63,24 +64,26 @@ else:
         m_even = 1
     else:
         m_even = 0
-
+#이까지 그냥  정의 
 print("m_ind , n_ind, all_ind",m_ind , n_ind , all_ind)
 
 c_ind =1
 result = 0
 tmp_ind = 0
 
-if(all_len % 2 ==0):
+# 전체 배열이 짝수개 일떄
+if(all_len % 2 ==0): 
     c_ind = 1
-    if(n[n_ind] == m[m_ind] ):
+    if(n[n_ind] == m[m_ind] ):# n,m값이 같을 떄 그냥 반환
         return ( n[n_ind]+m[m_ind] )/2
-    if(n[n_ind] < m[m_ind]):
+    
+    elif(n[n_ind] < m[m_ind]):# n<m 일때
         c_ind = (len(n) - n_ind)//2
-        tmp_ind = n_ind + c_ind 
-        if(tmp >=):
-            while(True): # c_ind 로 n>m 일 때 바꾸지 않기, c
+        tmp_ind = n_ind + c_ind
+        if(len(n)-1 - n_ind >= 1): # n 과 n max가 1단계 이상 차이날 떄 연산
+            while(True): # c_ind 로 n>m 일 때 바꾸지 않기,
                 if(m[m_ind-c_ind] < n[n_ind + c_ind]):
-                    c_ind = (len(n)-1 - tmp_ind) //2
+                    c_ind = (len(n) - tmp_ind) //2
                     tmp_ind = n_ind + c_ind
                 elif(n[n_ind] == m[m_ind] ):
                     return ( n[n_ind]+m[m_ind] )/2
@@ -88,12 +91,69 @@ if(all_len % 2 ==0):
                     m_ind -= c_ind
                     n_ind += c_ind
                     c_ind = c_ind //2
-                    
-                if((tmp_ind == len(n)-2 ):
+                    tmp_ind = tmp_ind + c_ind
+                if(tmp_ind == len(n)-1 ):
                     break
                 print("c_ind",c_ind)
-        if(m[m_ind-1] >= n[n_ind]):
+
+        
+        # 정답 구분
+        #n인덱스가 끝에있어서 조절이 안될 떄
+        if(n_ind == len(n) -1 and len(m) == len(n)):
+            return ( n[n_ind]+m[m_ind] )/2
+        elif(n_ind == len(n)-1 and m[m_ind-1] > n[n_ind]):
+            return (m[m_ind] +m[m_ind-1])/2
+
+        
+        #1. n m n m 2.  n m m n  3.  m n n m
+        if(n[n_ind+1] < m[m_ind] and m[m_ind-1] > n[n_ind]):
+            return (n[n_ind+1] +m[m_ind-1])/2
+        elif(m[m_ind-1] > n[n_ind]):
+            return (m[m_ind] +m[m_ind-1])/2
+        elif(m[m_ind] > n[n_ind+1]):
+            return (n[n_ind] +n[n_ind+1])/2
+        # 남은 경우의 수가  n m , n m n m ,  n n m n n m m m , n n n m m n m m   
+    
+    elif(n[n_ind] > m[m_ind]):    
+        c_ind = (n_ind+1)//2
+        tmp_ind = n_ind + c_ind
+        if(n_ind >= 1): # n 과 n max가 2단계 이상 차이날 떄 연산
+            while(True): # c_ind 로 n>m 일 때 바꾸지 않기,
+                if(m[m_ind+c_ind] > n[n_ind - c_ind]):
+                    c_ind = (tmp_ind+1) //2
+                    tmp_ind = n_ind - c_ind
+                elif(n[n_ind] == m[m_ind] ):
+                    return ( n[n_ind]+m[m_ind] )/2
+                else:
+                    m_ind += c_ind
+                    n_ind -= c_ind
+                    c_ind = (tmp_ind+1) //2
+                    tmp_ind = tmp_ind - c_ind
+                if(tmp_ind == 0):
+                    break
+                print("c_ind",c_ind)
+                
             
+        
+         # 정답 구분
+        #n인덱스가 끝에있어서 조절이 안될 떄
+        if(n_ind == 0 and len(m) == len(n)):
+            return ( n[n_ind]+m[m_ind] )/2
+        elif(n_ind == 0 and m[m_ind+1] < n[n_ind]):
+            return (m[m_ind] +m[m_ind+1])/2
+
+        
+        #1. m n m n  2.  n m m n  3.  m n n m
+        if(n[n_ind-1] > m[m_ind] and m[m_ind+1] < n[n_ind]):
+            return (n[n_ind-1] +m[m_ind+1])/2
+        elif(m[m_ind+1] < n[n_ind]):
+            return (m[m_ind] +m[m_ind+1])/2
+        elif(m[m_ind] < n[n_ind-1]):
+            return (n[n_ind] +n[n_ind-1])/2
+        # 남은 경우의 수가  n m , n m n m ,  n n m n n m m m , n n n m m n m m   
+        
+        
+if(all_len % 2 ==1):
     
 
 # # 메인 알고리즘
